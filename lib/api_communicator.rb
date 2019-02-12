@@ -26,9 +26,9 @@ def search_for(data_hash, find_key, find_val, find_detail)
     end
   end
   # If we have more than one match, return an array.
-  # If we have an empty array, return nil.
+  # If we have an empty array, return it.
   # If we only have one item in the array, return the item itself.
-  output = (output.length > 1) ? output : (output.length < 1) ? nil : output.first
+  output = (output.length > 1) ? output : (output.length < 1) ? output : output.first
 end
 
 def get_character_movies_from_api(character_name)
@@ -61,8 +61,13 @@ end
 def show_character_movies(character)
   films = get_character_movies_from_api(character)
   system("clear")
-  print "#{character.capitalize} has appeared in the following films:\n\n"
-  print_movies(films)
+  if !films.length 
+    print "#{character.capitalize} has appeared in the following films:\n\n"
+    print_movies(films)
+  else
+    print "Sorry, that character is not present in the database.\n"
+    print "Please check your spelling when entering a character.\n\n"
+  end
   get_yes_or_no_from_user
 end
 
