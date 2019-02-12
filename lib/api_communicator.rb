@@ -32,6 +32,14 @@ def get_character_movies_from_api(character_name)
 end
 
 def print_movies(films)
+  # films.collect do |film|
+  #   film["title"]
+  # end
+
+  # arr.each_with_index do |title, index|
+  #   puts "#{index}"
+  # end
+
   films.each_with_index do |film, index|
     puts "#{index}" + " #{film["title"]}"
   end
