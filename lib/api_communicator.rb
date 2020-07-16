@@ -4,8 +4,15 @@ require 'pry'
 
 def get_character_movies_from_api(character_name)
   #make the web request
+  character_name = "Luke Skywalker"
   response_string = RestClient.get('http://www.swapi.co/api/people/')
   response_hash = JSON.parse(response_string)
+  
+  character = response_hash["results"].find {|char| char["name"] == character_name}
+  
+  films_JSON = character["films"].map {|film| JSON.parse(RestClient.get(film))}
+  
+  print_movies(films_JSON)
 
   # iterate over the response hash to find the collection of `films` for the given
   #   `character`
@@ -19,7 +26,16 @@ def get_character_movies_from_api(character_name)
 end
 
 def print_movies(films)
-  # some iteration magic and puts out the movies in a nice list
+  films.each do |film|
+    puts puts
+    puts film["title"]
+    puts "Directed by " + film["director"]
+    puts "Produced by " + film["producer"]
+    puts "Released " + film["release_date"]
+    puts
+    puts film["opening_crawl"]
+  end
+  nil
 end
 
 def show_character_movies(character)
